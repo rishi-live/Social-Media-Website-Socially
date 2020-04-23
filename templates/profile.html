@@ -1,0 +1,234 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Welcome</title>
+
+    <!-- Bootstrap core CSS -->
+<link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.css') }}">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {--
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      body {
+          padding-top: 5rem;
+        }
+        .starter-template {
+          padding: 3rem 1.5rem;
+          text-align: center;
+        }
+    </style>
+    <!-- Custom styles for this template
+    <link href="starter-template.css" rel="stylesheet">-->
+  </head>
+  <body>
+
+  <!--===========================Navbar===========================================-->
+<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+  <a class="navbar-brand" href="#">Socially</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/my_friends">Friends</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link disabled" href="#">Messages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Report</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link disabled" href="#">Block</a>
+        </li>
+        <li class="nav-item active">
+        <a class="nav-link btn btn-outline-warning" href="/logout" style="margin-left: 100px;text-align:right">Logout <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+
+
+
+
+    <form class="form-inline my-2 my-lg-0" action="/search" method="post">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search_term">
+
+          <input type="submit" class="btn btn-success bg- my-2 my-sm-0" value="Search Profile">
+        </form>
+  </div>
+</nav>
+
+  <!--===========================Navbar End ==========================================-->
+
+<main role="main" class="container" style="background-color:#f2f3f5;padding-top:30px">
+
+    <div class="row" >
+
+        <div class="col-md-3">
+            <!--=======================================User profile==========================-->
+            <div class="card" style="background-color:#f2f3f5;padding:10px;z-index:90;position:sticky;top:70px">
+
+                <img src="{{ url_for('static', filename='images/' + session['profile_pic']) }}" style="height:200px">
+
+                <h3 style="padding:5px;text-align:center">{{ session['name'] }}</h3>
+                <p style="padding:5px;text-align:center">UEM Kolkata</p>
+                <a href="/my_messages" class="btn btn-warning btn-block">My Messages</a>
+                <a href="/my_friends" class="btn btn-outline-primary" style="margin-top:5px">Friends</a>
+                <a href="/pending_request" class="btn btn-outline-info" style="margin-top:5px">Request</a>
+                <a href="#" class="btn btn-outline-info" style="margin-top:5px">Edit Profile</a>
+            </div>
+            <!--=======================================User profile==========================-->
+
+        </div>
+
+        <div class="col-md-6" style="z-index:50">
+            <!--===========================Newsfeed==========================================-->
+            <div class="row">
+                <!--===================================create newsfeed==========================-->
+                <div class="col-md-12" style="margin-bottom:20px">
+                    <div class="card" style="background-color:#f5f4f4">
+                       <p style="text-align:center;">Create your own post</p>
+
+                        <a href="" data-toggle="modal" data-target="#myModal" class=" btn btn-outline-danger" style="width:100%">Post</a>
+
+                    </div>
+                </div>
+                <!--=============================create newsfeed=======================================-->
+                {% for i in newsfeed_info: %}
+                <div class="col-md-12" style="margin-bottom:20px">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-1 col-sm-1">
+                                        <img src="{{ url_for('static', filename='images/' + i[9]) }}"
+                                style="margin:10px;width:40px;height:40px;border-radius:20%">
+                                    </div>
+                                    <div class="col-md-9 col-sm-9">
+                                        <p style="margin:10px">{{ i[6] }}<br>
+                                        {{ i[2] }}</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <p style="padding:5px">{{ i[3] }}</p><hr>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <img src="{{ url_for('static', filename='images/' + i[4]) }}"
+                                style="padding:10px;width:100%;height:300px">
+                            </div>
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <hr>
+                                <a href="#" class="btn btn-outline-primary btn-xs disabled" style="margin-bottom:7px">Like</a>
+                                <a href="#" class="btn btn-outline-primary btn-xs disabled" style="margin-bottom:7px">Comment</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <!--===========================Newsfeed==========================================-->
+        </div>
+
+        <div class="col-md-3" style="background-color: ;z-index:20">
+            <!--==============================Friends status====================================-->
+            <div class="card" style="background-color:#efefef;position:sticky;top:70px">
+                <p style="padding:5px"><b>Users online</b></p>
+                <div class="row">
+                    {% for i in friends_status %}
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2">
+                                <img src="{{ url_for('static', filename='images/' + i[4]) }}"
+                                style="width:30px;height:30px;padding:3px;border-radius:40%">
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <p>{{ i[1] }}</p><hr style="color:blue">
+                            </div>
+                            <div class="col-md-1 col-sm-1">
+                                {% if i[5]==0 %}
+                                    <div style="margin-top:10px;background-color:#000000;
+                                width:10px;height:10px;border-radius:10px"></div>
+                                        {% else %}
+                                        <div style="margin-top:10px;background-color:red;
+                                width:10px;height:10px;border-radius:10px"></div>
+                                            {% endif %}
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!--==============================Friends status====================================-->
+        </div>
+    </div>
+<!--==================================================================================-->
+    <!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Create Post</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form class="form" action="/upload_newsfeed" method="post" enctype="multipart/form-data">
+            <label> Feed Text</label><br>
+            <textarea class="form-control" name="feed_text"></textarea><br>
+            <label>Upload Image</label>
+            <input type="file" class="form-control" name="feed_image"><br>
+            <input type="submit" value="Upload Post" class="btn btn-warning">
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</main><!-- /.container -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

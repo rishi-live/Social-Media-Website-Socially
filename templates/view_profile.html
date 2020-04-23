@@ -1,0 +1,179 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Welcome</title>
+
+    <!-- Bootstrap core CSS -->
+<link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.css') }}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {--
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      body {
+          padding-top: 5rem;
+        }
+        .starter-template {
+          padding: 3rem 1.5rem;
+          text-align: center;
+        }
+    </style>
+    <script type='text/javascript'>
+        function fn1(){
+            btn1.style.display = "none";
+            console.log("Testing 3");
+        }
+    </script>
+  </head>
+  <body>
+
+  <!--===========================Navbar===========================================-->
+ <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+  <a class="navbar-brand" href="#">Socially</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  disabled" href="#">Friends</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/my_messages">Messages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Report</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link disabled" href="#">Block</a>
+        </li>
+        <li class="nav-item active">
+        <a class="nav-link btn btn-outline-warning" href="/logout" style="margin-left: 100px;text-align:right">Logout <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+
+
+
+
+    <form class="form-inline my-2 my-lg-0" action="/search" method="post">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search_term">
+
+          <input type="submit" class="btn btn-success my-2 my-sm-0" value="Search Profile">
+        </form>
+  </div>
+</nav>
+
+  <!--===========================Navbar End ==========================================-->
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-3 col-sm-3">
+            <!--=======================================User profile==========================-->
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/' + user_info[0][4] ) }}" style="height:200px">
+                <h3 style="padding:5px;text-align:center">{{ user_info[0][1] }}</h3>
+                <p style="padding:5px;text-align:center">{{ user_info[0][2] }}</p>
+            </div>
+            <!--=======================================User profile==========================-->
+
+        </div>
+
+        <div class="col-md-6 col-sm-6">
+
+            <div class="card" style="padding:10px">
+                <h3>{{ user_info[0][1] }}</h3>
+                <p>{{ user_info[0][6] }}</p> <hr>
+
+                {%  if flag == 1 %}
+                    {% if status == 0 %}
+                        <button class="btn btn-outline-danger " style="width:200px" disabled>Pending</button>
+                    {% elif status == 1 %}
+                        <button class="btn btn-outline-warning " style="width:200px" disabled>Friends</button>
+                    {% endif %}
+                {%  else %}
+
+<!--                    <a  href="/send_request/{{ user_info[0][0] }}" id="Add_friend" onclick="Add_friend()" type="submit" class="btn btn-outline-primary " style="width:200px">Add friend</a><br>-->
+<!--                    <input type="submit" class="btn btn-outline-primary" value="Add friend">-->
+
+<!--                        <input src="/send_request/{{ user_info[0][0] }}" type="submit" id="btn1" onclick="return fn1();" class="btn btn-outline-primary" style="width:200px" value="Add friend">-->
+
+                    {% if flagOne == True %}
+                        <a type="button" class="btn btn-danger disabled" style="width:200px">Pending...</a><br>
+                        <a href ="/cancel_request/{{ user_info[0][0] }}" class="btn btn-outline-primary" type="button" style="width:200px;margin-top:5px">Canel Request</a>
+                    {%  else %}
+                        <a  id="btn1" href = "/send_request/{{ user_info[0][0] }}" class="btn btn-outline-primary" type="button" style="width:200px;margin-top:5px">Add Friend</a>
+                    {%  endif %}
+                {%  endif %}
+                <a class="btn btn-outline-success" style="width:200px;margin-top:5px" data-toggle="modal" data-target="#myModal">Message</a>
+                {%  if message: %}
+                    <h4>{{ message }}</h4>
+                {%  endif %}
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send message to {{ user_info[0][1] }}</h5>
+          <br>
+          <hr>
+
+
+          <span aria-hidden="true">&times;</span>
+
+      </div>
+      <div class="modal-body">
+          <form class="form" action="/send_message" method="post">
+              <textarea class="form-control" name="message"></textarea>
+              <input type="hidden" value="{{ user_info[0][0] }}" name="receiver_id">
+              <input type="submit" class="btn btn-success" value="send Message">
+
+          </form>
+
+      </div>
+        <!--======================not using close button=====================-->
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+
+       <!--======================not using close button=====================-->
+    </div>
+  </div>
+</div>
+
+
+</main><!-- /.container -->
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
